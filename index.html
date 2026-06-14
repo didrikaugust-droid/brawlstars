@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brawl Stars Invitasjon</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    max-width: 500px;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#yesBtn {
+    background: #4CAF50;
+    color: white;
+}
+
+#noBtn {
+    background: #f44336;
+    color: white;
+    position: absolute;
+}
+
+.timeBtn {
+    background: #2196F3;
+    color: white;
+}
+
+#booking {
+    display: none;
+    margin-top: 20px;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎮 Vil du bli med på Brawl Stars? 🎮</h1>
+
+    <button id="yesBtn">Ja</button>
+    <button id="noBtn">Nei</button>
+
+    <div id="booking">
+        <h2>Velg tidspunkt</h2>
+
+        <button class="timeBtn" onclick="bookTime('22:30')">22:30</button>
+        <button class="timeBtn" onclick="bookTime('22:35')">22:35</button>
+        <button class="timeBtn" onclick="bookTime('22:40')">22:40</button>
+
+        <div id="result"></div>
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+
+// Startplassering av Nei-knappen
+moveButton();
+
+function moveButton() {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// Flytt Nei-knappen når musen nærmer seg
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+// Vis booking når Ja trykkes
+document.getElementById("yesBtn").addEventListener("click", () => {
+    document.getElementById("booking").style.display = "block";
+});
+
+// Når en tid velges
+function bookTime(time) {
+    document.getElementById("result").innerHTML = `
+        <h3>✅ Du har valgt kl. ${time}!</h3>
+        <p>📱 Mitt nummer: 12345678</p>
+        <h2>🎮 Ses snart! 😎</h2>
+    `;
+}
+</script>
+
+</body>
+</html>
