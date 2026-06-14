@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bekreftet</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+    <h1>🎉 Booking bekreftet!</h1>
+
+    <div id="info"></div>
+
+    <h2>🎮 Ses snart på Brawl Stars! 😎</h2>
+</div>
+
+<script>
+const dato = localStorage.getItem("dato");
+const fornavn = localStorage.getItem("fornavn");
+const etternavn = localStorage.getItem("etternavn");
+
+document.getElementById("info").innerHTML = `
+    <p><strong>Dato:</strong> ${dato}</p>
+    <p><strong>Navn:</strong> ${fornavn} ${etternavn}</p>
+`;
+</script>
+
+</body>
+</html>
