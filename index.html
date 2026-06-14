@@ -3,132 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brawl Stars Invitasjon</title>
+<title>Brawl Stars</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ffcc00, #ff9900);
-    font-family: Arial, sans-serif;
+body{
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+    background:linear-gradient(135deg,#ffcc00,#ff9900);
 }
 
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    max-width: 550px;
-    width: 90%;
+.box{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
 }
 
-h1 {
-    color: #333;
+button{
+    padding:12px 25px;
+    font-size:18px;
+    margin:10px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-button {
-    padding: 12px 25px;
-    margin: 10px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+.yes{
+    background:#4CAF50;
+    color:white;
 }
 
-#yesBtn {
-    background-color: #4CAF50;
-    color: white;
-}
-
-#noBtn {
-    background-color: #f44336;
-    color: white;
-}
-
-.timeBtn {
-    background-color: #2196F3;
-    color: white;
-}
-
-#booking,
-#confirmNo {
-    display: none;
-    margin-top: 20px;
-}
-
-#result {
-    margin-top: 20px;
+.no{
+    background:#f44336;
+    color:white;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="box">
+    <h1>🎮 Vil du bli med å spille Brawl Stars?</h1>
 
-    <h1>🎮 Vil du bli med på Brawl Stars? 🎮</h1>
+    <button class="yes" onclick="window.location.href='booking.html'">
+        Ja
+    </button>
 
-    <button id="yesBtn">Ja</button>
-    <button id="noBtn">Nei</button>
+    <button class="no" onclick="showNo()">
+        Nei
+    </button>
 
-    <!-- Booking -->
-    <div id="booking">
-        <h2>📅 Velg tidspunkt</h2>
-
-        <button class="timeBtn" onclick="bookTime('22:30')">22:30</button>
-        <button class="timeBtn" onclick="bookTime('22:35')">22:35</button>
-        <button class="timeBtn" onclick="bookTime('22:40')">22:40</button>
-
-        <div id="result"></div>
-    </div>
-
-    <!-- Bekreft Nei -->
-    <div id="confirmNo">
-        <h2>😢 Er du sikker på at du ikke vil spille Brawl Stars?</h2>
-
-        <button onclick="goBack()">🎮 Gå tilbake</button>
-        <button onclick="finalNo()">❌ Ja, jeg er sikker</button>
-    </div>
-
+    <div id="noMessage"></div>
 </div>
 
 <script>
-// Når man trykker JA
-document.getElementById("yesBtn").addEventListener("click", () => {
-    document.getElementById("booking").style.display = "block";
-    document.getElementById("confirmNo").style.display = "none";
-});
-
-// Når man trykker NEI
-document.getElementById("noBtn").addEventListener("click", () => {
-    document.getElementById("confirmNo").style.display = "block";
-    document.getElementById("booking").style.display = "none";
-});
-
-// Velg tidspunkt
-function bookTime(time) {
-    document.getElementById("result").innerHTML = `
-        <h3>✅ Du har valgt kl. ${time}!</h3>
-        <p>📱 Mitt nummer: 40854161</p>
-        <h2>🎮 Ses snart! 😎</h2>
-    `;
-}
-
-// Gå tilbake fra NEI
-function goBack() {
-    document.getElementById("confirmNo").style.display = "none";
-}
-
-// Endelig nei
-function finalNo() {
-    document.getElementById("confirmNo").innerHTML = `
-        <h2>😢 Kanskje en annen gang!</h2>
-        <p>Du er alltid velkommen til å bli med senere 🎮</p>
-    `;
+function showNo(){
+    document.getElementById("noMessage").innerHTML =
+    "<h3>😢 Kanskje en annen gang!</h3>";
 }
 </script>
 
