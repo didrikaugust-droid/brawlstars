@@ -3,66 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brawl Stars</title>
-
-<style>
-body{
-    font-family:Arial,sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
-    background:linear-gradient(135deg,#ffcc00,#ff9900);
-}
-
-.box{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
-}
-
-button{
-    padding:12px 25px;
-    font-size:18px;
-    margin:10px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-.yes{
-    background:#4CAF50;
-    color:white;
-}
-
-.no{
-    background:#f44336;
-    color:white;
-}
-</style>
+<title>Brawl Stars Invitasjon</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="box">
+<div class="card">
     <h1>🎮 Vil du bli med å spille Brawl Stars?</h1>
+    <p>Velg et tidspunkt og bli med på en episk kamp!</p>
 
-    <button class="yes" onclick="window.location.href='booking.html'">
-        Ja
+    <button class="btn yes" onclick="window.location.href='booking.html'">
+        JA 🚀
     </button>
 
-    <button class="no" onclick="showNo()">
-        Nei
+    <button class="btn no" onclick="showNo()">
+        NEI
     </button>
 
-    <div id="noMessage"></div>
+    <div id="noBox"></div>
 </div>
 
 <script>
-function showNo(){
-    document.getElementById("noMessage").innerHTML =
-    "<h3>😢 Kanskje en annen gang!.</h3>";
+function showNo() {
+    document.getElementById("noBox").innerHTML = `
+        <div class="message">
+            <h3>😢 Er du sikker?</h3>
+            <button class="btn yes" onclick="document.getElementById('noBox').innerHTML=''">
+                Gå tilbake
+            </button>
+        </div>
+    `;
 }
 </script>
 
