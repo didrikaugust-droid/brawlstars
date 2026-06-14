@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velg dato</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#ffcc00,#ff9900);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+}
+
+.box{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    width:400px;
+}
+
+select,input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#4CAF50;
+    color:white;
+    cursor:pointer;
+}
+
+#nameSection{
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+
+    <h1>📅 Velg dato</h1>
+
+    <select id="dateSelect"></select>
+
+    <div id="nameSection">
+        <h3>Skriv inn navn</h3>
+
+        <input type="text" id="firstName" placeholder="Fornavn">
+        <input type="text" id="lastName" placeholder="Etternavn">
+
+        <button onclick="confirmBooking()">Bekreft</button>
+    </div>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+const select = document.getElementById("dateSelect");
+
+// Lag datoer fra i dag til 20 dager frem
+for(let i = 0; i <= 20; i++){
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+
+    const option = document.createElement("option");
+    option.value = date.toLocaleDateString("no-NO");
+    option.textContent = date.toLocaleDateString("no-NO");
+
+    select.appendChild(option);
+}
+
+select.addEventListener("change", () => {
+    document.getElementById("nameSection").style.display = "block";
+});
+
+function confirmBooking(){
+    const date = select.value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+
+    if(firstName === "" || lastName === ""){
+        alert("Fyll inn fornavn og etternavn.");
+        return;
+    }
+
+    document.getElementById("result").innerHTML = `
+        <h2>✅ Booking bekreftet!</h2>
+        <p>📅 Dato: ${date}</p>
+        <p>👤 ${firstName} ${lastName}</p>
+        <h3>🎮 Ses snart på Brawl Stars!</h3>
+    `;
+}
+</script>
+
+</body>
+</html>
