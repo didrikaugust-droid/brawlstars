@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dine opplysninger</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+    <h1>👤 Oppgi navn</h1>
+
+    <input id="firstName" type="text" placeholder="Fornavn">
+    <input id="lastName" type="text" placeholder="Etternavn">
+
+    <button class="btn yes" onclick="saveData()">
+        Bekreft
+    </button>
+</div>
+
+<script>
+function saveData() {
+
+    const first = document.getElementById("firstName").value;
+    const last = document.getElementById("lastName").value;
+
+    if(!first || !last){
+        alert("Fyll inn både fornavn og etternavn.");
+        return;
+    }
+
+    localStorage.setItem("fornavn", first);
+    localStorage.setItem("etternavn", last);
+
+    window.location.href = "success.html";
+}
+</script>
+
+</body>
+</html>
