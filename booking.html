@@ -4,13 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Velg dato</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(135deg,#111827,#1f2937);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.card {
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    width:100%;
+    max-width:600px;
+}
+
+#dates {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:10px;
+    margin-top:20px;
+}
+
+.date-btn {
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#3b82f6;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.date-btn:hover {
+    background:#2563eb;
+}
+</style>
 </head>
+
 <body>
 
 <div class="card">
     <h1>📅 Velg dato</h1>
-    <p>Velg en dato fra i dag til 20 dager frem.</p>
+    <p>Velg en dato fra i dag til 20 dager frem</p>
 
     <div id="dates"></div>
 </div>
@@ -18,17 +60,21 @@
 <script>
 const container = document.getElementById("dates");
 
-for(let i = 0; i <= 20; i++) {
+for (let i = 0; i <= 20; i++) {
     const date = new Date();
     date.setDate(date.getDate() + i);
 
+    const iso = date.toISOString().split("T")[0];
+    const pretty = date.toLocaleDateString("no-NO");
+
     const btn = document.createElement("button");
     btn.className = "date-btn";
-    btn.innerText = date.toLocaleDateString("no-NO");
+    btn.innerText = pretty;
 
     btn.onclick = () => {
-        localStorage.setItem("dato", btn.innerText);
-        window.location.href = "packages.html";
+        localStorage.setItem("dato", pretty);
+        localStorage.setItem("datoISO", iso);
+        window.location.href = "tid.html";
     };
 
     container.appendChild(btn);
