@@ -13,11 +13,18 @@
     height:240px;
     object-fit:contain;
     margin:20px auto;
-    filter:drop-shadow(0 0 10px rgba(0,0,0,0.4));
 }
 
-.cardGlow{
-    box-shadow:0 0 20px rgba(255,255,255,0.2);
+.info p{
+    margin:6px 0;
+}
+
+.level-box{
+    margin-top:20px;
+}
+
+input[type="range"]{
+    width:100%;
 }
 </style>
 
@@ -25,17 +32,27 @@
 
 <body>
 
-<div class="card cardGlow">
+<div class="card">
 
-<h1 id="name"></h1>
+<h1 id="name">Laster...</h1>
 
-<img id="img" class="img">
+<img id="img" class="img" src="images/default.png">
 
+<div class="info">
 <p id="rarity"></p>
 <p id="hp"></p>
 <p id="damage"></p>
+<p id="range"></p>
+<p id="speed"></p>
 <p id="type"></p>
 <p id="desc"></p>
+</div>
+
+<!-- 🎮 POWER LEVEL -->
+<div class="level-box">
+    <p>Power Level: <span id="levelText">1</span></p>
+    <input id="level" type="range" min="1" max="11" value="1">
+</div>
 
 <button class="btn yes" onclick="history.back()">⬅ Tilbake</button>
 
@@ -43,30 +60,74 @@
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
-const name = params.get("name");
-
+const name = new URLSearchParams(window.location.search).get("name");
 document.getElementById("name").innerText = name;
 
-/* 🔥 FULL DATA */
+/* 🎮 FULL DATABASE */
 const data = {
-"Shelly": {rarity:"Common",hp:3800,damage:504,type:"Damage",desc:"Start brawler",img:"images/shelly.png"},
-"Colt": {rarity:"Common",hp:2800,damage:300,type:"Sharpshooter",desc:"Rask skyter",img:"images/colt.png"},
-"Bull": {rarity:"Rare",hp:5200,damage:800,type:"Tank",desc:"Nærkamp monster",img:"images/bull.png"},
-"Spike": {rarity:"Legendary",hp:2400,damage:560,type:"Control",desc:"Eksplosive kaktuser",img:"images/spike.png"},
-"Edgar": {rarity:"Mythic",hp:3000,damage:600,type:"Assassin",desc:"Hopper og healer",img:"images/edgar.png"}
+"Shelly": {rarity:"Common",hp:3800,damage:504,range:"Medium",speed:"Normal",type:"Damage Dealer",desc:"Start brawler med shotgun.",img:"images/shelly.png"},
+"Colt": {rarity:"Common",hp:2800,damage:300,range:"Long",speed:"Normal",type:"Sharpshooter",desc:"Rask skyter med høy DPS.",img:"images/colt.png"},
+"Bull": {rarity:"Rare",hp:5200,damage:800,range:"Short",speed:"Fast",type:"Tank",desc:"Sterk på nært hold.",img:"images/bull.png"},
+"Brock": {rarity:"Rare",hp:2400,damage:1100,range:"Very Long",speed:"Normal",type:"Sharpshooter",desc:"Raketter med splash.",img:"images/brock.png"},
+"Rico": {rarity:"Epic",hp:2600,damage:320,range:"Long",speed:"Normal",type:"Bouncer",desc:"Kuler spretter.",img:"images/rico.png"},
+"Spike": {rarity:"Legendary",hp:2400,damage:560,range:"Long",speed:"Normal",type:"Control",desc:"Kaktus eksplosjoner.",img:"images/spike.png"},
+"Barley": {rarity:"Rare",hp:2400,damage:680,range:"Long",speed:"Normal",type:"Thrower",desc:"Skade over tid.",img:"images/barley.png"},
+"Jessie": {rarity:"Rare",hp:3200,damage:520,range:"Medium",speed:"Normal",type:"Engineer",desc:"Turret skyter.",img:"images/jessie.png"},
+"Dynamike": {rarity:"Epic",hp:2800,damage:1200,range:"Long",speed:"Normal",type:"Thrower",desc:"Stor eksplosjon.",img:"images/dynamike.png"},
+"Tick": {rarity:"Epic",hp:2200,damage:600,range:"Very Long",speed:"Very Fast",type:"Thrower",desc:"Miner eksplosjoner.",img:"images/tick.png"},
+"8-Bit": {rarity:"Epic",hp:6000,damage:400,range:"Long",speed:"Very Slow",type:"Support",desc:"Damage boost.",img:"images/8bit.png"},
+"Emz": {rarity:"Epic",hp:3600,damage:500,range:"Medium",speed:"Normal",type:"Control",desc:"Spray skade.",img:"images/emz.png"},
+"Stu": {rarity:"Epic",hp:3200,damage:580,range:"Medium",speed:"Very Fast",type:"Assassin",desc:"Super etter skudd.",img:"images/stu.png"},
+"El Primo": {rarity:"Rare",hp:6000,damage:360,range:"Short",speed:"Fast",type:"Tank",desc:"Slåss nært.",img:"images/elprimo.png"},
+"Poco": {rarity:"Rare",hp:3800,damage:700,range:"Medium",speed:"Normal",type:"Support",desc:"Healer lag.",img:"images/poco.png"},
+"Rosa": {rarity:"Rare",hp:7000,damage:520,range:"Short",speed:"Fast",type:"Tank",desc:"Shield i busker.",img:"images/rosa.png"},
+"Carl": {rarity:"Epic",hp:5200,damage:680,range:"Medium",speed:"Fast",type:"Thrower",desc:"Pickaxe boomerang.",img:"images/carl.png"},
+"Penny": {rarity:"Rare",hp:3400,damage:900,range:"Long",speed:"Normal",type:"Artillery",desc:"Cannon support.",img:"images/penny.png"},
+"Darryl": {rarity:"Rare",hp:6000,damage:420,range:"Short",speed:"Fast",type:"Tank",desc:"Ruller inn.",img:"images/darryl.png"},
+"Jacky": {rarity:"Epic",hp:5000,damage:700,range:"Short",speed:"Fast",type:"Tank",desc:"Driller fiender.",img:"images/jacky.png"},
+"Piper": {rarity:"Epic",hp:2400,damage:1600,range:"Very Long",speed:"Normal",type:"Sharpshooter",desc:"Mer damage på avstand.",img:"images/piper.png"},
+"Pam": {rarity:"Epic",hp:5800,damage:360,range:"Medium",speed:"Normal",type:"Support",desc:"Healing turret.",img:"images/pam.png"},
+"Frank": {rarity:"Epic",hp:10000,damage:1200,range:"Short",speed:"Very Slow",type:"Tank",desc:"Stun hammer.",img:"images/frank.png"},
+"Bibi": {rarity:"Epic",hp:5200,damage:980,range:"Short",speed:"Fast",type:"Tank",desc:"Knockback ball.",img:"images/bibi.png"},
+"Bea": {rarity:"Epic",hp:2400,damage:1500,range:"Long",speed:"Normal",type:"Sharpshooter",desc:"Charged shot.",img:"images/bea.png"},
+"Nani": {rarity:"Epic",hp:2600,damage:1400,range:"Very Long",speed:"Normal",type:"Control",desc:"Drone control.",img:"images/nani.png"},
+"Edgar": {rarity:"Mythic",hp:3000,damage:600,range:"Short",speed:"Very Fast",type:"Assassin",desc:"Hopper og healer.",img:"images/edgar.png"},
+"Surge": {rarity:"Mythic",hp:4000,damage:1100,range:"Long",speed:"Normal",type:"Upgrade",desc:"Blir sterkere.",img:"images/surge.png"},
+"Lou": {rarity:"Epic",hp:3400,damage:700,range:"Medium",speed:"Normal",type:"Control",desc:"Fryser fiender.",img:"images/lou.png"}
 };
 
+/* 🎮 LOAD BRAWLER */
 const b = data[name];
 
-if(b){
-    document.getElementById("img").src = b.img;
-    document.getElementById("rarity").innerText = "Rarity: " + b.rarity;
-    document.getElementById("hp").innerText = "HP: " + b.hp;
-    document.getElementById("damage").innerText = "Damage: " + b.damage;
-    document.getElementById("type").innerText = "Type: " + b.type;
-    document.getElementById("desc").innerText = b.desc;
+let baseHP = b.hp;
+let baseDamage = b.damage;
+
+document.getElementById("img").src = b.img;
+document.getElementById("rarity").innerText = "Rarity: " + b.rarity;
+document.getElementById("range").innerText = "Range: " + b.range;
+document.getElementById("speed").innerText = "Speed: " + b.speed;
+document.getElementById("type").innerText = "Type: " + b.type;
+document.getElementById("desc").innerText = b.desc;
+
+/* ⚙️ POWER LEVEL SYSTEM */
+function updateStats(level){
+    const multiplier = 1 + (level - 1) * 0.07;
+
+    document.getElementById("hp").innerText =
+        "HP: " + Math.round(baseHP * multiplier);
+
+    document.getElementById("damage").innerText =
+        "Damage: " + Math.round(baseDamage * multiplier);
+
+    document.getElementById("levelText").innerText = level;
 }
+
+updateStats(1);
+
+/* 🎮 SLIDER */
+document.getElementById("level").addEventListener("input", (e) => {
+    updateStats(Number(e.target.value));
+});
 
 </script>
 
