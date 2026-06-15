@@ -1,101 +1,141 @@
-<script>
-
-function showNo(){
-    document.getElementById("noBox").innerHTML = `
-        <div class="message">
-            <h3>😢 Er du sikker?</h3>
-            <button class="btn yes" onclick="document.getElementById('noBox').innerHTML=''">
-                Gå tilbake
-            </button>
-        </div>
-    `;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* 🎮 50 BRAWLERS */
-const brawlers = [
-{name:"Shelly", rarity:"common"},
-{name:"Colt", rarity:"common"},
-{name:"Bull", rarity:"rare"},
-{name:"Brock", rarity:"rare"},
-{name:"Rico", rarity:"epic"},
-{name:"Spike", rarity:"legendary"},
-{name:"Barley", rarity:"rare"},
-{name:"Jessie", rarity:"rare"},
-{name:"Dynamike", rarity:"epic"},
-{name:"Tick", rarity:"epic"},
-{name:"8-Bit", rarity:"epic"},
-{name:"Emz", rarity:"epic"},
-{name:"Stu", rarity:"epic"},
-{name:"El Primo", rarity:"rare"},
-{name:"Poco", rarity:"rare"},
-{name:"Rosa", rarity:"rare"},
-{name:"Carl", rarity:"epic"},
-{name:"Penny", rarity:"rare"},
-{name:"Darryl", rarity:"rare"},
-{name:"Jacky", rarity:"epic"},
-{name:"Piper", rarity:"epic"},
-{name:"Pam", rarity:"epic"},
-{name:"Frank", rarity:"epic"},
-{name:"Bibi", rarity:"epic"},
-{name:"Bea", rarity:"epic"},
-{name:"Nani", rarity:"epic"},
-{name:"Edgar", rarity:"mythic"},
-{name:"Griff", rarity:"epic"},
-{name:"Grom", rarity:"epic"},
-{name:"Janet", rarity:"mythic"},
-{name:"Bonnie", rarity:"mythic"},
-{name:"Otis", rarity:"mythic"},
-{name:"Sam", rarity:"mythic"},
-{name:"Gus", rarity:"rare"},
-{name:"Gray", rarity:"mythic"},
-{name:"Willow", rarity:"mythic"},
-{name:"Mandy", rarity:"epic"},
-{name:"Maisie", rarity:"epic"},
-{name:"Hank", rarity:"epic"},
-{name:"Pearl", rarity:"epic"},
-{name:"Chuck", rarity:"mythic"},
-{name:"Doug", rarity:"mythic"},
-{name:"Chester", rarity:"legendary"},
-{name:"Cordelius", rarity:"legendary"},
-{name:"Kit", rarity:"legendary"},
-{name:"Larry", rarity:"epic"},
-{name:"Lawrie", rarity:"epic"},
-{name:"Surge", rarity:"mythic"},
-{name:"Lou", rarity:"epic"}
-];
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#ffb300,#ff6f00);
+    font-family:Arial,sans-serif;
+    padding:20px;
 
-const grid = document.getElementById("grid");
-const searchInput = document.getElementById("searchInput");
-
-function render(list){
-    grid.innerHTML = "";
-
-    list.forEach(b => {
-        const div = document.createElement("div");
-        div.classList.add("brawler-card");
-        div.classList.add("rarity-" + b.rarity);
-
-        div.innerText = b.name;
-
-        div.onclick = () => {
-            window.location.href = "brawler.html?name=" + encodeURIComponent(b.name);
-        };
-
-        grid.appendChild(div);
-    });
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
 }
 
-render(brawlers);
+/* 🌟 MAIN CARD */
+.card{
+    background:rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    padding:35px;
+    border-radius:25px;
+    text-align:center;
+    max-width:700px;
+    width:100%;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    border:2px solid rgba(255,255,255,0.4);
+}
+
+.card h1{
+    margin-bottom:10px;
+    font-size:28px;
+}
+
+.card p{
+    color:#444;
+    margin-bottom:15px;
+}
+
+/* 🎮 BUTTONS */
+.btn{
+    border:none;
+    padding:14px 26px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:16px;
+    margin:8px;
+    transition:0.2s;
+    font-weight:bold;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* GREEN / RED */
+.yes{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:white;
+    box-shadow:0 8px 20px rgba(34,197,94,0.35);
+}
+
+.no{
+    background:linear-gradient(135deg,#ef4444,#b91c1c);
+    color:white;
+    box-shadow:0 8px 20px rgba(239,68,68,0.35);
+}
+
+/* 🎮 BRAWLER SECTION */
+.brawler-section{
+    background:rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    max-width:700px;
+    width:100%;
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+}
+
+.brawler-section h2{
+    margin-bottom:10px;
+}
 
 /* 🔍 SEARCH */
-searchInput.addEventListener("input", e => {
-    const value = e.target.value.toLowerCase();
+#searchInput{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:2px solid #eee;
+    margin-bottom:15px;
+    font-size:15px;
+    outline:none;
+    transition:0.2s;
+}
 
-    const filtered = brawlers.filter(b =>
-        b.name.toLowerCase().includes(value)
-    );
+#searchInput:focus{
+    border-color:#ffb300;
+    box-shadow:0 0 10px rgba(255,179,0,0.4);
+}
 
-    render(filtered);
-});
+/* 🎯 GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:12px;
+}
 
-</script>
+/* 🎴 BRAWLER CARD */
+.brawler-card{
+    background:white;
+    padding:12px;
+    border-radius:14px;
+    cursor:pointer;
+    text-align:center;
+    font-weight:bold;
+    transition:0.2s;
+
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+.brawler-card:hover{
+    transform:scale(1.06);
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ⭐ RARITY COLORS */
+.rarity-common{border:2px solid #9ca3af;}
+.rarity-rare{border:2px solid #3b82f6;}
+.rarity-epic{border:2px solid #a855f7;}
+.rarity-mythic{border:2px solid #ef4444;}
+.rarity-legendary{border:2px solid #facc15;}
+
+/* 💬 MESSAGE */
+.message{
+    margin-top:15px;
+    padding:15px;
+    background:#f3f4f6;
+    border-radius:15px;
+}
