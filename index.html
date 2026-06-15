@@ -20,8 +20,10 @@ body{
     background:linear-gradient(135deg,#ffb300,#ff6f00);
     font-family:Arial,sans-serif;
     padding:20px;
+    flex-direction:column;
 }
 
+/* 🔶 DIN ORIGINAL CARD (BEHOLDT) */
 .card{
     background:white;
     padding:30px;
@@ -30,7 +32,7 @@ body{
     max-width:800px;
     width:100%;
     box-shadow:0 15px 40px rgba(0,0,0,.2);
-    margin-bottom:80px;
+    margin-bottom:30px;
 }
 
 .hero-image{
@@ -78,6 +80,61 @@ p{
     border-radius:15px;
 }
 
+/* 🎮 BRAWLER SECTION */
+.brawler-section{
+    background:white;
+    max-width:800px;
+    width:100%;
+    padding:20px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+    margin-bottom:80px;
+}
+
+.brawler-section h2{
+    margin-bottom:10px;
+}
+
+#searchInput{
+    padding:10px;
+    width:100%;
+    max-width:300px;
+    border-radius:10px;
+    border:none;
+    margin-bottom:15px;
+    background:#f3f4f6;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+    gap:10px;
+}
+
+/* CARD */
+.brawler-card{
+    background:#f9fafb;
+    border-radius:15px;
+    padding:10px;
+    cursor:pointer;
+    transition:.2s;
+    text-align:center;
+    font-weight:bold;
+}
+
+.brawler-card:hover{
+    transform:scale(1.05);
+}
+
+/* RARITY */
+.rarity-common{border:2px solid gray;}
+.rarity-rare{border:2px solid #3b82f6;}
+.rarity-epic{border:2px solid #a855f7;}
+.rarity-mythic{border:2px solid #ef4444;}
+.rarity-legendary{border:2px solid #facc15;}
+
+/* NAV */
 .bottom-nav{
     position:fixed;
     bottom:0;
@@ -97,51 +154,146 @@ p{
 }
 </style>
 </head>
+
 <body>
 
+<!-- 🔶 ORIGINAL CARD -->
 <div class="card">
-
 
 <img src="images/brwal.png" class="hero-image" alt="Brawl Stars">
 
-    <h1>🎮 Vil du bli med å spille Brawl Stars?</h1>
+<h1>🎮 Vil du bli med å spille Brawl Stars?</h1>
 
-    <p>
-        Velg dato, pakke og bli med på en episk spilløkt!
-    </p>
+<p>Velg JA for booking eller scroll ned til alle brawlers!</p>
 
-    <button class="btn yes"
-        onclick="window.location.href='booking.html'">
-        JA 🚀
-    </button>
+<button class="btn yes" onclick="window.location.href='booking.html'">
+JA 🚀
+</button>
 
-    <button class="btn no"
-        onclick="showNo()">
-        NEI
-    </button>
+<button class="btn no" onclick="showNo()">
+NEI
+</button>
 
-    <div id="noBox"></div>
+<div id="noBox"></div>
 
 </div>
 
+<!-- 🎮 BRAWLERS -->
+<div class="brawler-section">
+
+<h2>🎮 Brawlers</h2>
+
+<input id="searchInput" placeholder="Søk brawler...">
+
+<div class="grid" id="grid"></div>
+
+</div>
+
+<!-- 📌 NAV -->
 <nav class="bottom-nav">
-    <a href="index.html">🏠 Hjem</a>
-    <a href="booking.html">📅 Book</a>
+<a href="index.html">🏠 Hjem</a>
+<a href="booking.html">📅 Book</a>
 </nav>
 
 <script>
+
 function showNo() {
     document.getElementById("noBox").innerHTML = `
         <div class="message">
-            <h3>😢 Er du sikker på at du ikke vil spille?</h3>
-            <br>
-            <button class="btn yes"
-                onclick="document.getElementById('noBox').innerHTML=''">
+            <h3>😢 Er du sikker?</h3>
+            <button class="btn yes" onclick="document.getElementById('noBox').innerHTML=''">
                 🎮 Gå tilbake
             </button>
         </div>
     `;
 }
+
+/* 🎮 50 BRAWLERS (INGEN BILDER ENDRET) */
+const brawlers = [
+{name:"Shelly", rarity:"common"},
+{name:"Colt", rarity:"common"},
+{name:"Bull", rarity:"rare"},
+{name:"Brock", rarity:"rare"},
+{name:"Rico", rarity:"epic"},
+{name:"Spike", rarity:"legendary"},
+{name:"Barley", rarity:"rare"},
+{name:"Jessie", rarity:"rare"},
+{name:"Dynamike", rarity:"epic"},
+{name:"Tick", rarity:"epic"},
+{name:"8-Bit", rarity:"epic"},
+{name:"Emz", rarity:"epic"},
+{name:"Stu", rarity:"epic"},
+{name:"El Primo", rarity:"rare"},
+{name:"Poco", rarity:"rare"},
+{name:"Rosa", rarity:"rare"},
+{name:"Carl", rarity:"epic"},
+{name:"Penny", rarity:"rare"},
+{name:"Darryl", rarity:"rare"},
+{name:"Jacky", rarity:"epic"},
+{name:"Piper", rarity:"epic"},
+{name:"Pam", rarity:"epic"},
+{name:"Frank", rarity:"epic"},
+{name:"Bibi", rarity:"epic"},
+{name:"Bea", rarity:"epic"},
+{name:"Nani", rarity:"epic"},
+{name:"Edgar", rarity:"mythic"},
+{name:"Griff", rarity:"epic"},
+{name:"Grom", rarity:"epic"},
+{name:"Janet", rarity:"mythic"},
+{name:"Bonnie", rarity:"mythic"},
+{name:"Otis", rarity:"mythic"},
+{name:"Sam", rarity:"mythic"},
+{name:"Gus", rarity:"rare"},
+{name:"Gray", rarity:"mythic"},
+{name:"Willow", rarity:"mythic"},
+{name:"Mandy", rarity:"epic"},
+{name:"Maisie", rarity:"epic"},
+{name:"Hank", rarity:"epic"},
+{name:"Pearl", rarity:"epic"},
+{name:"Chuck", rarity:"mythic"},
+{name:"Doug", rarity:"mythic"},
+{name:"Chester", rarity:"legendary"},
+{name:"Cordelius", rarity:"legendary"},
+{name:"Kit", rarity:"legendary"},
+{name:"Larry", rarity:"epic"},
+{name:"Lawrie", rarity:"epic"},
+{name:"Surge", rarity:"mythic"},
+{name:"Lou", rarity:"epic"}
+];
+
+const grid = document.getElementById("grid");
+const searchInput = document.getElementById("searchInput");
+
+function render(list){
+    grid.innerHTML = "";
+
+    list.forEach(b => {
+        const div = document.createElement("div");
+        div.classList.add("brawler-card");
+        div.classList.add("rarity-" + b.rarity);
+
+        div.innerText = b.name;
+
+        div.onclick = () => {
+            alert("Du trykket på " + b.name);
+        };
+
+        grid.appendChild(div);
+    });
+}
+
+render(brawlers);
+
+searchInput.addEventListener("input", e => {
+    const value = e.target.value.toLowerCase();
+
+    const filtered = brawlers.filter(b =>
+        b.name.toLowerCase().includes(value)
+    );
+
+    render(filtered);
+});
+
 </script>
 
 </body>
