@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brawler</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="card">
+
+<h1 id="name">Laster...</h1>
+<p id="info">Laster info...</p>
+
+<button class="btn yes" onclick="history.back()">
+⬅ Tilbake
+</button>
+
+</div>
+
+<script>
+// Henter navn fra URL
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name");
+
+// Viser navnet
+document.getElementById("name").innerText = name;
+
+// Enkel info (kan utvides senere)
+const info = {
+    "Shelly": "Start brawler med shotgun.",
+    "Colt": "Skyter raskt med høy damage.",
+    "Bull": "Tank som gjør mye skade på nært hold.",
+    "Spike": "Legendary cactus med eksplosiv skade.",
+    "Edgar": "Rask assassin som hopper på fiender."
+};
+
+document.getElementById("info").innerText =
+info[name] || "Ingen info lagt til enda.";
+</script>
+
+</body>
+</html>
