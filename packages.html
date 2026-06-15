@@ -4,176 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Velg pakke</title>
+<link rel="stylesheet" href="style.css">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.packages{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:30px;
 }
 
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #111827, #1f2937);
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    padding-bottom: 80px;
+.package{
+    padding:25px;
+    border-radius:20px;
+    color:white;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
-.card {
-    background: white;
-    padding: 40px;
-    border-radius: 25px;
-    width: 100%;
-    max-width: 1000px;
-    text-align: center;
+.standard{
+    background:#6b7280;
 }
 
-.packages {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+.gold{
+    background:linear-gradient(135deg,#FFD700,#E6B800);
+    color:black;
 }
 
-.package {
-    border-radius: 20px;
-    padding: 30px;
-    color: white;
-    transition: transform 0.3s, box-shadow 0.3s;
+.premium{
+    background:linear-gradient(135deg,#7c3aed,#c084fc);
 }
 
-.package:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+.package h2{
+    margin-bottom:10px;
 }
 
-.standard {
-    background: #6b7280;
+.package p{
+    margin:10px 0;
 }
 
-.gold {
-    background: linear-gradient(135deg, #FFD700, #D4AF37);
-    color: black;
-}
-
-.premium {
-    background: linear-gradient(135deg, #7c3aed, #3b82f6);
-}
-
-.package-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    border: 4px solid rgba(255,255,255,0.5);
-}
-
-.package h2 {
-    margin-bottom: 10px;
-}
-
-.package h3 {
-    margin-bottom: 10px;
-}
-
-.package p {
-    margin-bottom: 15px;
-}
-
-.package button {
-    margin-top: 20px;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #111827;
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-}
-
-.bottom-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
+.select-btn{
+    margin-top:15px;
+    border:none;
+    padding:12px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
 }
 </style>
 </head>
-
 <body>
 
 <div class="card">
 
-<h1>🏆 Velg pakke</h1>
-<p>Velg hvor mange runder du ønsker.</p>
+    <h1>🎮 Velg pakke</h1>
+    <p>Velg pakken som passer deg best.</p>
 
-<div class="packages">
+    <div class="packages">
 
-<div class="package standard">
-    <img src="images/standard.png" class="package-image" alt="Standard"
-         onerror="this.src='images/fallback.png'">
+        <div class="package standard">
+            <h2>Standard</h2>
+            <p>10 runder</p>
+            <button class="select-btn" onclick="choosePackage('Standard - 10 runder')">
+                Velg
+            </button>
+        </div>
 
-    <h2>Standard</h2>
-    <h3>10 runder</h3>
-    <p>Perfekt for en vanlig spilløkt.</p>
+        <div class="package gold">
+            <h2>Gull</h2>
+            <p>15 runder</p>
+            <button class="select-btn" onclick="choosePackage('Gull - 15 runder')">
+                Velg
+            </button>
+        </div>
 
-    <button onclick="choosePackage('Standard - 10 runder')">
-        Velg
-    </button>
-</div>
+        <div class="package premium">
+            <h2>Premium</h2>
+            <p>30 runder</p>
+            <button class="select-btn" onclick="choosePackage('Premium - 30 runder')">
+                Velg
+            </button>
+        </div>
 
-<div class="package gold">
-    <img src="images/gold.png" class="package-image" alt="Gull"
-         onerror="this.src='images/fallback.png'">
-
-    <h2>Gull</h2>
-    <h3>15 runder</h3>
-    <p>Mer action og flere kamper.</p>
-
-    <button onclick="choosePackage('Gull - 15 runder')">
-        Velg
-    </button>
-</div>
-
-<div class="package premium">
-    <img src="images/premium.png" class="package-image" alt="Premium"
-         onerror="this.src='images/fallback.png'">
-
-    <h2>Premium</h2>
-    <h3>30 runder</h3>
-    <p>For ekte Brawl Stars-legender.</p>
-
-    <button onclick="choosePackage('Premium - 30 runder')">
-        Velg
-    </button>
-</div>
+    </div>
 
 </div>
-</div>
-
-<nav class="bottom-nav">
-    <a href="index.html">🏠 Hjem</a>
-    <a href="booking.html">📅 Book</a>
-</nav>
 
 <script>
-function choosePackage(pkg) {
-    if (!pkg) return;
+function choosePackage(pkg){
     localStorage.setItem("pakke", pkg);
     window.location.href = "details.html";
 }
