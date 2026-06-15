@@ -23,7 +23,7 @@ body{
     flex-direction:column;
 }
 
-/* 🔶 DIN ORIGINAL CARD (BEHOLDT) */
+/* 🔶 CARD */
 .card{
     background:white;
     padding:30px;
@@ -80,7 +80,7 @@ p{
     border-radius:15px;
 }
 
-/* 🎮 BRAWLER SECTION */
+/* 🎮 BRAWLERS */
 .brawler-section{
     background:white;
     max-width:800px;
@@ -89,10 +89,6 @@ p{
     border-radius:25px;
     box-shadow:0 15px 40px rgba(0,0,0,.2);
     margin-bottom:80px;
-}
-
-.brawler-section h2{
-    margin-bottom:10px;
 }
 
 #searchInput{
@@ -105,14 +101,12 @@ p{
     background:#f3f4f6;
 }
 
-/* GRID */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
     gap:10px;
 }
 
-/* CARD */
 .brawler-card{
     background:#f9fafb;
     border-radius:15px;
@@ -133,38 +127,19 @@ p{
 .rarity-epic{border:2px solid #a855f7;}
 .rarity-mythic{border:2px solid #ef4444;}
 .rarity-legendary{border:2px solid #facc15;}
-
-/* NAV */
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:#111827;
-    display:flex;
-    justify-content:space-around;
-    padding:15px;
-}
-
-.bottom-nav a{
-    color:white;
-    text-decoration:none;
-    font-size:18px;
-    font-weight:bold;
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🔶 ORIGINAL CARD -->
+<!-- 🔶 TOP CARD -->
 <div class="card">
 
 <img src="images/brwal.png" class="hero-image" alt="Brawl Stars">
 
 <h1>🎮 Vil du bli med å spille Brawl Stars?</h1>
 
-<p>Velg JA for booking eller scroll ned til alle brawlers!</p>
+<p>Velg JA eller scroll ned til brawlers</p>
 
 <button class="btn yes" onclick="window.location.href='booking.html'">
 JA 🚀
@@ -189,26 +164,20 @@ NEI
 
 </div>
 
-<!-- 📌 NAV -->
-<nav class="bottom-nav">
-<a href="index.html">🏠 Hjem</a>
-<a href="booking.html">📅 Book</a>
-</nav>
-
 <script>
 
-function showNo() {
+function showNo(){
     document.getElementById("noBox").innerHTML = `
         <div class="message">
             <h3>😢 Er du sikker?</h3>
             <button class="btn yes" onclick="document.getElementById('noBox').innerHTML=''">
-                🎮 Gå tilbake
+                Gå tilbake
             </button>
         </div>
     `;
 }
 
-/* 🎮 50 BRAWLERS (INGEN BILDER ENDRET) */
+/* 🎮 50 BRAWLERS */
 const brawlers = [
 {name:"Shelly", rarity:"common"},
 {name:"Colt", rarity:"common"},
@@ -275,7 +244,7 @@ function render(list){
         div.innerText = b.name;
 
         div.onclick = () => {
-            alert("Du trykket på " + b.name);
+            window.location.href = "brawler.html?name=" + encodeURIComponent(b.name);
         };
 
         grid.appendChild(div);
