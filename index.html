@@ -1,169 +1,3 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brawl Stars Invitasjon</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ffb300,#ff6f00);
-    font-family:Arial,sans-serif;
-    padding:20px;
-    flex-direction:column;
-}
-
-/* 🔶 CARD */
-.card{
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    text-align:center;
-    max-width:800px;
-    width:100%;
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
-    margin-bottom:30px;
-}
-
-.hero-image{
-    width:100%;
-    border-radius:20px;
-    margin-bottom:20px;
-}
-
-h1{
-    margin-bottom:15px;
-}
-
-p{
-    margin-bottom:20px;
-}
-
-.btn{
-    border:none;
-    padding:15px 30px;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:18px;
-    margin:10px;
-    transition:.3s;
-}
-
-.btn:hover{
-    transform:scale(1.05);
-}
-
-.yes{
-    background:#22c55e;
-    color:white;
-}
-
-.no{
-    background:#ef4444;
-    color:white;
-}
-
-.message{
-    margin-top:20px;
-    padding:20px;
-    background:#f3f4f6;
-    border-radius:15px;
-}
-
-/* 🎮 BRAWLERS */
-.brawler-section{
-    background:white;
-    max-width:800px;
-    width:100%;
-    padding:20px;
-    border-radius:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
-    margin-bottom:80px;
-}
-
-#searchInput{
-    padding:10px;
-    width:100%;
-    max-width:300px;
-    border-radius:10px;
-    border:none;
-    margin-bottom:15px;
-    background:#f3f4f6;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
-    gap:10px;
-}
-
-.brawler-card{
-    background:#f9fafb;
-    border-radius:15px;
-    padding:10px;
-    cursor:pointer;
-    transition:.2s;
-    text-align:center;
-    font-weight:bold;
-}
-
-.brawler-card:hover{
-    transform:scale(1.05);
-}
-
-/* RARITY */
-.rarity-common{border:2px solid gray;}
-.rarity-rare{border:2px solid #3b82f6;}
-.rarity-epic{border:2px solid #a855f7;}
-.rarity-mythic{border:2px solid #ef4444;}
-.rarity-legendary{border:2px solid #facc15;}
-</style>
-</head>
-
-<body>
-
-<!-- 🔶 TOP CARD -->
-<div class="card">
-
-<img src="images/brwal.png" class="hero-image" alt="Brawl Stars">
-
-<h1>🎮 Vil du bli med å spille Brawl Stars?</h1>
-
-<p>Velg JA eller scroll ned til brawlers</p>
-
-<button class="btn yes" onclick="window.location.href='booking.html'">
-JA 🚀
-</button>
-
-<button class="btn no" onclick="showNo()">
-NEI
-</button>
-
-<div id="noBox"></div>
-
-</div>
-
-<!-- 🎮 BRAWLERS -->
-<div class="brawler-section">
-
-<h2>🎮 Brawlers</h2>
-
-<input id="searchInput" placeholder="Søk brawler...">
-
-<div class="grid" id="grid"></div>
-
-</div>
-
 <script>
 
 function showNo(){
@@ -177,7 +11,7 @@ function showNo(){
     `;
 }
 
-/* 🎮 50 BRAWLERS */
+/* 🎮 FULL 50 BRAWLERS */
 const brawlers = [
 {name:"Shelly", rarity:"common"},
 {name:"Colt", rarity:"common"},
@@ -230,21 +64,54 @@ const brawlers = [
 {name:"Lou", rarity:"epic"}
 ];
 
+/* ⭐ FAVORITTER */
+function getFavs(){
+    return JSON.parse(localStorage.getItem("favs") || "[]");
+}
+
+function toggleFav(name){
+    let favs = getFavs();
+
+    if(favs.includes(name)){
+        favs = favs.filter(f => f !== name);
+    } else {
+        favs.push(name);
+    }
+
+    localStorage.setItem("favs", JSON.stringify(favs));
+    render(brawlers);
+}
+
+/* 🎨 RENDER */
 const grid = document.getElementById("grid");
 const searchInput = document.getElementById("searchInput");
 
 function render(list){
+    const favs = getFavs();
     grid.innerHTML = "";
 
     list.forEach(b => {
         const div = document.createElement("div");
-        div.classList.add("brawler-card");
-        div.classList.add("rarity-" + b.rarity);
+        div.className = "brawler-card rarity-" + b.rarity;
 
-        div.innerText = b.name;
+        const star = favs.includes(b.name) ? "⭐ " : "";
+
+        div.innerHTML = `
+            ${star}${b.name}
+        `;
 
         div.onclick = () => {
-            window.location.href = "brawler.html?name=" + encodeURIComponent(b.name);
+            div.classList.add("clickAnim");
+
+            setTimeout(() => {
+                window.location.href = "brawler.html?name=" + encodeURIComponent(b.name);
+            }, 150);
+        };
+
+        /* right click = favorite */
+        div.oncontextmenu = (e) => {
+            e.preventDefault();
+            toggleFav(b.name);
         };
 
         grid.appendChild(div);
@@ -253,6 +120,7 @@ function render(list){
 
 render(brawlers);
 
+/* 🔍 SEARCH */
 searchInput.addEventListener("input", e => {
     const value = e.target.value.toLowerCase();
 
@@ -264,6 +132,3 @@ searchInput.addEventListener("input", e => {
 });
 
 </script>
-
-</body>
-</html>
