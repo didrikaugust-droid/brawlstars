@@ -64,8 +64,8 @@ for (let i = 0; i <= 20; i++) {
     const date = new Date();
     date.setDate(date.getDate() + i);
 
-    const iso = date.toISOString().split("T")[0];
     const pretty = date.toLocaleDateString("no-NO");
+    const iso = date.toISOString().split("T")[0];
 
     const btn = document.createElement("button");
     btn.className = "date-btn";
@@ -74,6 +74,8 @@ for (let i = 0; i <= 20; i++) {
     btn.onclick = () => {
         localStorage.setItem("dato", pretty);
         localStorage.setItem("datoISO", iso);
+
+        // 👉 SEND VIDERE TIL TID-SIDEN
         window.location.href = "tid.html";
     };
 
