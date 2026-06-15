@@ -6,6 +6,20 @@
 <title>Brawler</title>
 
 <link rel="stylesheet" href="style.css">
+
+<style>
+.brawler-img{
+    width:200px;
+    height:200px;
+    object-fit:contain;
+    margin:20px 0;
+}
+
+.info-box{
+    margin-top:10px;
+}
+</style>
+
 </head>
 
 <body>
@@ -13,7 +27,12 @@
 <div class="card">
 
 <h1 id="name">Laster...</h1>
+
+<img id="image" class="brawler-img" src="" alt="brawler">
+
+<div class="info-box">
 <p id="info">Laster info...</p>
+</div>
 
 <button class="btn yes" onclick="history.back()">
 ⬅ Tilbake
@@ -22,24 +41,39 @@
 </div>
 
 <script>
-// Henter navn fra URL
+
+// Hent navn fra URL
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
 
-// Viser navnet
 document.getElementById("name").innerText = name;
 
-// Enkel info (kan utvides senere)
-const info = {
-    "Shelly": "Start brawler med shotgun.",
-    "Colt": "Skyter raskt med høy damage.",
-    "Bull": "Tank som gjør mye skade på nært hold.",
-    "Spike": "Legendary cactus med eksplosiv skade.",
-    "Edgar": "Rask assassin som hopper på fiender."
+// 🔥 BILDE MAP (kobler navn → bilde)
+const images = {
+    "Shelly":"images/shelly.png",
+    "Colt":"images/colt.png",
+    "Bull":"images/bull.png",
+    "Spike":"images/spike.png",
+    "Edgar":"images/edgar.png"
 };
 
+// 📌 INFO MAP
+const info = {
+    "Shelly":"Start brawler med shotgun.",
+    "Colt":"Rask skytter med høy damage.",
+    "Bull":"Tank som gjør mye skade på nært hold.",
+    "Spike":"Legendary cactus med eksplosiv skade.",
+    "Edgar":"Rask assassin som hopper på fiender."
+};
+
+// Sett bilde (eller fallback)
+document.getElementById("image").src =
+images[name] || "images/default.png";
+
+// Sett info
 document.getElementById("info").innerText =
 info[name] || "Ingen info lagt til enda.";
+
 </script>
 
 </body>
