@@ -5,7 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bekreftet</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* holder designet ditt enkelt og likt */
+.comment-box {
+    margin-top: 20px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-family: Arial;
+}
+
+button {
+    margin-top: 10px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #3b82f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+#info p {
+    margin: 8px 0;
+}
+</style>
 </head>
+
 <body>
 
 <div class="card">
@@ -14,6 +51,17 @@
     <div id="info"></div>
 
     <h2>🎮 Ses snart på Brawl Stars! 😎</h2>
+
+    <!-- KOMMENTAR -->
+    <div class="comment-box">
+        <h3>💬 Skriv en kommentar</h3>
+
+        <textarea id="comment" placeholder="Skriv kommentaren din her..."></textarea>
+
+        <button onclick="sendComment()">Send</button>
+
+        <p id="savedComment"></p>
+    </div>
 </div>
 
 <script>
@@ -21,12 +69,37 @@ const dato = localStorage.getItem("dato");
 const fornavn = localStorage.getItem("fornavn");
 const etternavn = localStorage.getItem("etternavn");
 const pakke = localStorage.getItem("pakke");
-    
+const kommentar = localStorage.getItem("kommentar");
+
 document.getElementById("info").innerHTML = `
     <p><strong>Dato:</strong> ${dato}</p>
     <p><strong>Pakke:</strong> ${pakke}</p>
     <p><strong>Navn:</strong> ${fornavn} ${etternavn}</p>
 `;
+
+// viser tidligere kommentar hvis den finnes
+if (kommentar) {
+    document.getElementById("savedComment").innerHTML =
+        "💬 Din kommentar: " + kommentar;
+}
+
+function sendComment() {
+    const comment = document.getElementById("comment").value;
+
+    if (!comment) {
+        alert("Skriv en kommentar først!");
+        return;
+    }
+
+    localStorage.setItem("kommentar", comment);
+
+    document.getElementById("savedComment").innerHTML =
+        "💬 Din kommentar: " + comment;
+
+    document.getElementById("comment").value = "";
+
+    alert("✅ Kommentar sendt!");
+}
 </script>
 
 </body>
