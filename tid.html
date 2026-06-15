@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velg tid</title>
+
+<style>
+body {
+    font-family: Arial;
+    background:#111827;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.card {
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    width:100%;
+    max-width:500px;
+}
+
+.times {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+button {
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#3b82f6;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#2563eb;
+}
+
+.date {
+    font-weight:bold;
+    margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>⏰ Velg tid</h2>
+    <div class="date" id="date"></div>
+
+    <div class="times">
+        <button onclick="velg('22:00')">22:00</button>
+        <button onclick="velg('22:10')">22:10</button>
+        <button onclick="velg('22:20')">22:20</button>
+        <button onclick="velg('22:30')">22:30</button>
+    </div>
+</div>
+
+<script>
+document.getElementById("date").innerText =
+"Valgt dato: " + localStorage.getItem("dato");
+
+function velg(tid){
+    localStorage.setItem("tid", tid);
+    window.location.href = "packages.html";
+}
+</script>
+
+</body>
+</html>
