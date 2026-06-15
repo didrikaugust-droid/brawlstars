@@ -8,15 +8,16 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-.brawler-img{
-    width:200px;
-    height:200px;
+.img{
+    width:240px;
+    height:240px;
     object-fit:contain;
-    margin:20px 0;
+    margin:20px auto;
+    filter:drop-shadow(0 0 10px rgba(0,0,0,0.4));
 }
 
-.info-box{
-    margin-top:10px;
+.cardGlow{
+    box-shadow:0 0 20px rgba(255,255,255,0.2);
 }
 </style>
 
@@ -24,55 +25,48 @@
 
 <body>
 
-<div class="card">
+<div class="card cardGlow">
 
-<h1 id="name">Laster...</h1>
+<h1 id="name"></h1>
 
-<img id="image" class="brawler-img" src="" alt="brawler">
+<img id="img" class="img">
 
-<div class="info-box">
-<p id="info">Laster info...</p>
-</div>
+<p id="rarity"></p>
+<p id="hp"></p>
+<p id="damage"></p>
+<p id="type"></p>
+<p id="desc"></p>
 
-<button class="btn yes" onclick="history.back()">
-⬅ Tilbake
-</button>
+<button class="btn yes" onclick="history.back()">⬅ Tilbake</button>
 
 </div>
 
 <script>
 
-// Hent navn fra URL
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
 
 document.getElementById("name").innerText = name;
 
-// 🔥 BILDE MAP (kobler navn → bilde)
-const images = {
-    "Shelly":"images/shelly.png",
-    "Colt":"images/colt.png",
-    "Bull":"images/bull.png",
-    "Spike":"images/spike.png",
-    "Edgar":"images/edgar.png"
+/* 🔥 FULL DATA */
+const data = {
+"Shelly": {rarity:"Common",hp:3800,damage:504,type:"Damage",desc:"Start brawler",img:"images/shelly.png"},
+"Colt": {rarity:"Common",hp:2800,damage:300,type:"Sharpshooter",desc:"Rask skyter",img:"images/colt.png"},
+"Bull": {rarity:"Rare",hp:5200,damage:800,type:"Tank",desc:"Nærkamp monster",img:"images/bull.png"},
+"Spike": {rarity:"Legendary",hp:2400,damage:560,type:"Control",desc:"Eksplosive kaktuser",img:"images/spike.png"},
+"Edgar": {rarity:"Mythic",hp:3000,damage:600,type:"Assassin",desc:"Hopper og healer",img:"images/edgar.png"}
 };
 
-// 📌 INFO MAP
-const info = {
-    "Shelly":"Start brawler med shotgun.",
-    "Colt":"Rask skytter med høy damage.",
-    "Bull":"Tank som gjør mye skade på nært hold.",
-    "Spike":"Legendary cactus med eksplosiv skade.",
-    "Edgar":"Rask assassin som hopper på fiender."
-};
+const b = data[name];
 
-// Sett bilde (eller fallback)
-document.getElementById("image").src =
-images[name] || "images/default.png";
-
-// Sett info
-document.getElementById("info").innerText =
-info[name] || "Ingen info lagt til enda.";
+if(b){
+    document.getElementById("img").src = b.img;
+    document.getElementById("rarity").innerText = "Rarity: " + b.rarity;
+    document.getElementById("hp").innerText = "HP: " + b.hp;
+    document.getElementById("damage").innerText = "Damage: " + b.damage;
+    document.getElementById("type").innerText = "Type: " + b.type;
+    document.getElementById("desc").innerText = b.desc;
+}
 
 </script>
 
