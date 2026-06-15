@@ -3,84 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velg dato</title>
+<title>Brawl Stars Invitasjon</title>
 
 <style>
-body {
-    font-family: Arial;
-    background: linear-gradient(135deg,#111827,#1f2937);
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
+    background:linear-gradient(135deg,#ffb300,#ff6f00);
+    font-family:Arial,sans-serif;
     padding:20px;
+    flex-direction:column;
 }
 
-.card {
+/* CARD */
+.card{
     background:white;
     padding:40px;
-    border-radius:20px;
+    border-radius:25px;
     text-align:center;
+    max-width:700px;
     width:100%;
-    max-width:600px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+    margin-bottom:20px;
 }
 
-#dates {
+h1{ margin-bottom:15px; }
+p{ margin-bottom:20px; }
+
+.btn{
+    border:none;
+    padding:15px 30px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    margin:10px;
+    transition:.3s;
+}
+
+.btn:hover{ transform:scale(1.05); }
+
+.yes{ background:#22c55e; color:white; }
+.no{ background:#ef4444; color:white; }
+
+.message{
+    margin-top:20px;
+    padding:20px;
+    background:#f3f4f6;
+    border-radius:15px;
+}
+
+/* BRAWLERS */
+.brawler-section{
+    background:white;
+    max-width:700px;
+    width:100%;
+    padding:20px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+#searchInput{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    margin-bottom:15px;
+}
+
+.grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
     gap:10px;
-    margin-top:20px;
 }
 
-.date-btn {
-    padding:15px;
-    border:none;
+.brawler-card{
+    background:#f9fafb;
+    padding:12px;
     border-radius:12px;
-    background:#3b82f6;
-    color:white;
-    font-weight:bold;
     cursor:pointer;
+    text-align:center;
+    font-weight:bold;
+    transition:.2s;
 }
 
-.date-btn:hover {
-    background:#2563eb;
+.brawler-card:hover{
+    transform:scale(1.05);
 }
+
+/* rarity */
+.rarity-common{border:2px solid gray;}
+.rarity-rare{border:2px solid #3b82f6;}
+.rarity-epic{border:2px solid #a855f7;}
+.rarity-mythic{border:2px solid #ef4444;}
+.rarity-legendary{border:2px solid #facc15;}
 </style>
 </head>
 
 <body>
 
+<!-- TOP CARD -->
 <div class="card">
-    <h1>📅 Velg dato</h1>
-    <p>Velg en dato fra i dag til 20 dager frem</p>
 
-    <div id="dates"></div>
+<img src="images/brwal.png" style="width:100%;border-radius:20px;margin-bottom:15px;">
+
+<h1>🎮 Brawl Stars</h1>
+<p>Velg en brawler og trykk for detaljer</p>
+
+<!-- ✅ FIX HER -->
+<button class="btn yes" onclick="window.location.href='booking.html'">
+    JA 🚀
+</button>
+
+<button class="btn no" onclick="showNo()">NEI</button>
+
+<div id="noBox"></div>
+
+</div>
+
+<!-- BRAWLERS -->
+<div class="brawler-section">
+
+<h2>🎮 Brawlers</h2>
+
+<input id="searchInput" placeholder="Søk brawler...">
+
+<div class="grid" id="grid"></div>
+
 </div>
 
 <script>
-const container = document.getElementById("dates");
 
-for (let i = 0; i <= 20; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() + i);
-
-    const pretty = date.toLocaleDateString("no-NO");
-    const iso = date.toISOString().split("T")[0];
-
-    const btn = document.createElement("button");
-    btn.className = "date-btn";
-    btn.innerText = pretty;
-
-    btn.onclick = () => {
-        localStorage.setItem("dato", pretty);
-        localStorage.setItem("datoISO", iso);
-
-
-        window.location.href = "tid.html";
-    };
-
-    container.appendChild(btn);
+function showNo(){
+    document.getElementById("noBox").innerHTML = `
+        <div class="message">
+            <h3>😢 Ok da...</h3>
+            <button class="btn yes" onclick="document.getElementById('noBox').innerHTML=''">Tilbake</button>
+        </div>
+    `;
 }
+
+/* 🎮 50 BRAWLERS */
+const brawlers = [
+{name:"Shelly", rarity:"common"},
+{name:"Colt", rarity:"common"},
+{name:"Bull", rarity:"rare"},
+{name:"Brock", rarity:"rare"},
+{name:"Rico", rarity:"epic"},
+{name:"Spike", rarity:"legendary"},
+{name:"Barley", rarity:"rare"},
+{name:"Jessie", rarity:"rare"},
+{name:"Dynamike", rarity:"epic"},
+{name:"Tick", rarity:"epic"},
+{name:"8-Bit", rarity:"epic"},
+{name:"Emz", rarity:"epic"},
+{name:"Stu", rarity:"epic"},
+{name:"El Primo", rarity:"rare"},
+{name:"Poco", rarity:"rare"},
+{name:"Rosa", rarity:"rare"},
+{name:"Carl", rarity:"epic"},
+{name:"Penny", rarity:"rare"},
+{name:"Darryl", rarity:"rare"},
+{name:"Jacky", rarity:"epic"},
+{name:"Piper", rarity:"epic"},
+{name:"Pam", rarity:"epic"},
+{name:"Frank", rarity:"epic"},
+{name:"Bibi", rarity:"epic"},
+{name:"Bea", rarity:"epic"},
+{name:"Nani", rarity:"epic"},
+{name:"Edgar", rarity:"mythic"},
+{name:"Griff", rarity:"epic"},
+{name:"Grom", rarity:"epic"},
+{name:"Janet", rarity:"mythic"},
+{name:"Bonnie", rarity:"mythic"},
+{name:"Otis", rarity:"mythic"},
+{name:"Sam", rarity:"mythic"},
+{name:"Gus", rarity:"rare"},
+{name:"Gray", rarity:"mythic"},
+{name:"Willow", rarity:"mythic"},
+{name:"Mandy", rarity:"epic"},
+{name:"Maisie", rarity:"epic"},
+{name:"Hank", rarity:"epic"},
+{name:"Pearl", rarity:"epic"},
+{name:"Chuck", rarity:"mythic"},
+{name:"Doug", rarity:"mythic"},
+{name:"Chester", rarity:"legendary"},
+{name:"Cordelius", rarity:"legendary"},
+{name:"Kit", rarity:"legendary"},
+{name:"Larry", rarity:"epic"},
+{name:"Lawrie", rarity:"epic"},
+{name:"Surge", rarity:"mythic"},
+{name:"Lou", rarity:"epic"}
+];
+
+/* ⭐ FAVORITTER */
+function getFavs(){
+    return JSON.parse(localStorage.getItem("favs") || "[]");
+}
+
+function toggleFav(name){
+    let favs = getFavs();
+
+    if(favs.includes(name)){
+        favs = favs.filter(f => f !== name);
+    } else {
+        favs.push(name);
+    }
+
+    localStorage.setItem("favs", JSON.stringify(favs));
+    render(brawlers);
+}
+
+/* RENDER */
+const grid = document.getElementById("grid");
+const searchInput = document.getElementById("searchInput");
+
+function render(list){
+    const favs = getFavs();
+    grid.innerHTML = "";
+
+    list.forEach(b => {
+        const div = document.createElement("div");
+        div.className = "brawler-card rarity-" + b.rarity;
+
+        div.innerHTML = (favs.includes(b.name) ? "⭐ " : "") + b.name;
+
+        div.onclick = () => {
+            window.location.href = "brawler.html?name=" + encodeURIComponent(b.name);
+        };
+
+        div.oncontextmenu = (e) => {
+            e.preventDefault();
+            toggleFav(b.name);
+        };
+
+        grid.appendChild(div);
+    });
+}
+
+render(brawlers);
+
+searchInput.addEventListener("input", e => {
+    const value = e.target.value.toLowerCase();
+    render(brawlers.filter(b => b.name.toLowerCase().includes(value)));
+});
+
 </script>
 
 </body>
