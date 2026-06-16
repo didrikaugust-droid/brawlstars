@@ -39,6 +39,22 @@ button:hover {
 #info p {
     margin: 8px 0;
 }
+
+/* BOTTOM BAR */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0,0,0,0.9);
+    padding: 10px 0;
+}
+
+.bottom-bar button {
+    background: #3b82f6;
+}
 </style>
 </head>
 
@@ -51,11 +67,10 @@ button:hover {
 
     <h2>🎮 Ses snart på Brawl Stars! 😎</h2>
 
-    <!-- KOMMENTAR -->
     <div class="comment-box">
         <h3>💬 Skriv en kommentar</h3>
 
-        <textarea id="comment" placeholder="Skriv kommentaren din her..."></textarea>
+        <textarea id="comment"></textarea>
 
         <button onclick="sendComment()">Send</button>
 
@@ -63,6 +78,13 @@ button:hover {
 
         <div id="allComments"></div>
     </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+    <button onclick="goHome()">🏠 Home</button>
+    <button onclick="goBooking()">📅 Booking</button>
+    <button onclick="goProfile()">👤 Profil</button>
 </div>
 
 <script>
@@ -104,10 +126,7 @@ const db = getDatabase(app);
 window.sendComment = function () {
     const comment = document.getElementById("comment").value;
 
-    if (!comment) {
-        alert("Skriv en kommentar først!");
-        return;
-    }
+    if (!comment) return alert("Skriv en kommentar først!");
 
     localStorage.setItem("kommentar", comment);
 
@@ -118,7 +137,7 @@ window.sendComment = function () {
         dato: new Date().toLocaleString("no-NO")
     });
 
-    document.getElementById("savedComment").innerHTML =
+    document.getElementById("savedComment").innerText =
         "💬 Din kommentar: " + comment;
 
     document.getElementById("comment").value = "";
@@ -126,15 +145,12 @@ window.sendComment = function () {
     alert("✅ Kommentar sendt!");
 };
 
-
-
+/* XP SYSTEM */
 let xp = parseInt(localStorage.getItem("xp") || "0");
-
-// gi XP hver gang success åpnes
 xp += 20;
 localStorage.setItem("xp", xp);
 
-// popup
+/* popup */
 const popup = document.createElement("div");
 popup.innerText = "+20 XP";
 popup.style.position = "fixed";
@@ -145,22 +161,16 @@ popup.style.background = "#22c55e";
 popup.style.color = "white";
 popup.style.padding = "12px 20px";
 popup.style.borderRadius = "12px";
-popup.style.fontWeight = "bold";
 popup.style.zIndex = "9999";
-popup.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
-
 document.body.appendChild(popup);
-
 setTimeout(() => popup.remove(), 2000);
 
-
-
+/* comments */
 const box = document.createElement("div");
 document.getElementById("allComments").appendChild(box);
 
 onValue(ref(db, "comments"), (snapshot) => {
     const data = snapshot.val();
-
     box.innerHTML = "<h3>💬 Alle kommentarer</h3>";
 
     if (data) {
@@ -175,6 +185,10 @@ onValue(ref(db, "comments"), (snapshot) => {
         });
     }
 });
+
+function goHome(){ window.location.href="index.html"; }
+function goBooking(){ window.location.href="booking.html"; }
+function goProfile(){ window.location.href="profile.html"; }
 </script>
 
 </body>
