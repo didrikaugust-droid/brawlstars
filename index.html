@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logg inn</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+    background: linear-gradient(135deg,#ffb300,#ff6f00);
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #22c55e;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #16a34a;
+}
+
+.small {
+    margin-top: 10px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>🎮 Logg inn</h1>
+
+    <input id="name" placeholder="Brukernavn">
+    <input id="code" placeholder="Passord">
+
+    <button onclick="login()">Logg inn</button>
+
+    <div class="small">Du forblir logget inn</div>
+</div>
+
+<script>
+function login() {
+    const name = document.getElementById("name").value;
+    const code = document.getElementById("code").value;
+
+    if (!name || !code) {
+        alert("Skriv inn alt!");
+        return;
+    }
+
+    // lagre login (PERMANENT)
+    localStorage.setItem("loggedIn", "true");
+    localStorage.setItem("user", name);
+
+    // gå til hovedside
+    window.location.href = "home.html";
+}
+
+// AUTO LOGIN (hvis allerede logget inn)
+if (localStorage.getItem("loggedIn") === "true") {
+    window.location.href = "home.html";
+}
+</script>
+
+</body>
+</html>
