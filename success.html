@@ -129,7 +129,7 @@ window.sendComment = function () {
 
 // VIS ALLE KOMMENTARER
 const box = document.createElement("div");
-document.querySelector(".comment-box").appendChild(box);
+document.getElementById("allComments").appendChild(box);
 
 onValue(ref(db, "comments"), (snapshot) => {
     const data = snapshot.val();
