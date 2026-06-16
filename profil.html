@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#111827,#1f2937);
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+/* PROFILE IMAGE */
+.profile-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #3b82f6;
+    margin-bottom: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: #3b82f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+/* INFO */
+.info {
+    margin-top: 15px;
+    text-align: left;
+    font-size: 14px;
+    background: #f3f4f6;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* XP SYSTEM */
+.xp-box {
+    margin-top: 15px;
+}
+
+.bar {
+    background: #ddd;
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #3b82f6;
+    transition: 0.3s;
+}
+
+/* BOTTOM BAR */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.bottom-bar button {
+    background: #3b82f6;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>👤 Profil</h1>
+
+<img id="img" class="profile-img" src="https://via.placeholder.com/120">
+
+<input type="file" id="file">
+
+<input id="fornavn" placeholder="Fornavn">
+<input id="etternavn" placeholder="Etternavn">
+
+<select id="brawler">
+    <option>Velg favoritt brawler</option>
+    <option>Shelly</option>
+    <option>Colt</option>
+    <option>Spike</option>
+    <option>Leon</option>
+    <option>Edgar</option>
+    <option>Mortis</option>
+</select>
+
+<input id="years" placeholder="Hvor lenge har du spilt?">
+<input id="trophies" placeholder="Trophies">
+
+<input id="xpInput" placeholder="XP (automatisk fra booking)">
+
+<button onclick="save()">Lagre profil</button>
+
+<!-- XP + LEVEL -->
+<div class="xp-box">
+    <div id="levelText">Level 1</div>
+
+    <div class="bar">
+        <div id="xpBar" class="bar-fill"></div>
+    </div>
+
+    <small id="xpText">0 / 100 XP</small>
+</div>
+
+<div class="info" id="info"></div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+    <button onclick="goHome()">🏠 Home</button>
+    <button onclick="goBooking()">📅 Booking</button>
+    <button onclick="goProfile()">👤 Profil</button>
+</div>
+
+<script>
+function goHome(){ window.location.href="home.html"; }
+function goBooking(){ window.location.href="booking.html"; }
+function goProfile(){ window.location.href="profile.html"; }
+
+/* LOAD IMAGE */
+const savedImg = localStorage.getItem("img");
+if (savedImg) document.getElementById("img").src = savedImg;
+
+/* XP SYSTEM */
+function updateXP() {
+    let xp = parseInt(localStorage.getItem("xp") || "0");
+
+    let level = Math.floor(xp / 100) + 1;
+    let progress = xp % 100;
+
+    document.getElementById("levelText").innerText = "Level " + level;
+    document.getElementById("xpBar").style.width = progress + "%";
+    document.getElementById("xpText").innerText = progress + " / 100 XP";
+}
+updateXP();
+
+/* LOAD PROFILE */
+function load() {
+    const data = JSON.parse(localStorage.getItem("profile"));
+    if (!data) return;
+
+    document.getElementById("info").innerHTML = `
+        <b>Navn:</b> ${data.fornavn} ${data.etternavn}<br>
+        <b>Brawler:</b> ${data.brawler}<br>
+        <b>Spilt:</b> ${data.years}<br>
+        <b>Trophies:</b> ${data.trophies}
+    `;
+}
+load();
+
+/* SAVE PROFILE */
+function save() {
+    const file = document.getElementById("file").files[0];
+
+    const data = {
+        fornavn: document.getElementById("fornavn").value,
+        etternavn: document.getElementById("etternavn").value,
+        brawler: document.getElementById("brawler").value,
+        years: document.getElementById("years").value,
+        trophies: document.getElementById("trophies").value
+    };
+
+    localStorage.setItem("profile", JSON.stringify(data));
+
+    let xp = document.getElementById("xpInput").value;
+    if (xp) localStorage.setItem("xp", xp);
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            localStorage.setItem("img", e.target.result);
+            document.getElementById("img").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    updateXP();
+    load();
+
+    alert("Profil lagret!");
+}
+</script>
+
+</body>
+</html>
