@@ -104,6 +104,33 @@ p{ margin-bottom:20px; }
 .rarity-epic{border:2px solid #a855f7;}
 .rarity-mythic{border:2px solid #ef4444;}
 .rarity-legendary{border:2px solid #facc15;}
+
+/* BOTTOM BAR */
+.bottom-bar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:rgba(0,0,0,0.85);
+    display:flex;
+    justify-content:space-around;
+    padding:10px 0;
+    z-index:9999;
+}
+
+.bottom-bar button{
+    background:#3b82f6;
+    border:none;
+    padding:10px 15px;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.bottom-bar button:hover{
+    background:#2563eb;
+}
 </style>
 </head>
 
@@ -117,7 +144,6 @@ p{ margin-bottom:20px; }
 <h1>🎮 Brawl Stars</h1>
 <p>Velg en brawler og trykk for detaljer</p>
 
-<!-- ✅ FIX HER -->
 <button class="btn yes" onclick="window.location.href='booking.html'">
     JA 🚀
 </button>
@@ -139,7 +165,26 @@ p{ margin-bottom:20px; }
 
 </div>
 
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+    <button onclick="goHome()">🏠 Home</button>
+    <button onclick="goBooking()">📅 Booking</button>
+    <button onclick="goProfile()">👤 Profil</button>
+</div>
+
 <script>
+
+function goHome(){
+    window.location.href = "index.html";
+}
+
+function goBooking(){
+    window.location.href = "booking.html";
+}
+
+function goProfile(){
+    window.location.href = "profile.html";
+}
 
 function showNo(){
     document.getElementById("noBox").innerHTML = `
@@ -150,7 +195,7 @@ function showNo(){
     `;
 }
 
-/* 🎮 50 BRAWLERS */
+/* BRAWLERS */
 const brawlers = [
 {name:"Shelly", rarity:"common"},
 {name:"Colt", rarity:"common"},
@@ -203,7 +248,6 @@ const brawlers = [
 {name:"Lou", rarity:"epic"}
 ];
 
-/* ⭐ FAVORITTER */
 function getFavs(){
     return JSON.parse(localStorage.getItem("favs") || "[]");
 }
@@ -221,7 +265,6 @@ function toggleFav(name){
     render(brawlers);
 }
 
-/* RENDER */
 const grid = document.getElementById("grid");
 const searchInput = document.getElementById("searchInput");
 
