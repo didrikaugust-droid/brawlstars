@@ -126,9 +126,7 @@ window.sendComment = function () {
     alert("✅ Kommentar sendt!");
 };
 
-/* =========================
-   💥 XP SYSTEM (LAGT TIL)
-========================= */
+
 
 let xp = parseInt(localStorage.getItem("xp") || "0");
 
@@ -155,9 +153,7 @@ document.body.appendChild(popup);
 
 setTimeout(() => popup.remove(), 2000);
 
-/* =========================
-   💬 VIS KOMMENTARER
-========================= */
+
 
 const box = document.createElement("div");
 document.getElementById("allComments").appendChild(box);
