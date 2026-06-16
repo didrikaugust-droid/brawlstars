@@ -61,7 +61,6 @@ button:hover {
 
         <p id="savedComment"></p>
 
-        <!-- HER VISER VI ALLE KOMMENTARER -->
         <div id="allComments"></div>
     </div>
 </div>
@@ -127,7 +126,39 @@ window.sendComment = function () {
     alert("✅ Kommentar sendt!");
 };
 
-// VIS ALLE KOMMENTARER
+/* =========================
+   💥 XP SYSTEM (LAGT TIL)
+========================= */
+
+let xp = parseInt(localStorage.getItem("xp") || "0");
+
+// gi XP hver gang success åpnes
+xp += 20;
+localStorage.setItem("xp", xp);
+
+// popup
+const popup = document.createElement("div");
+popup.innerText = "+20 XP";
+popup.style.position = "fixed";
+popup.style.top = "20px";
+popup.style.left = "50%";
+popup.style.transform = "translateX(-50%)";
+popup.style.background = "#22c55e";
+popup.style.color = "white";
+popup.style.padding = "12px 20px";
+popup.style.borderRadius = "12px";
+popup.style.fontWeight = "bold";
+popup.style.zIndex = "9999";
+popup.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
+
+document.body.appendChild(popup);
+
+setTimeout(() => popup.remove(), 2000);
+
+/* =========================
+   💬 VIS KOMMENTARER
+========================= */
+
 const box = document.createElement("div");
 document.getElementById("allComments").appendChild(box);
 
