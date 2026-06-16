@@ -45,6 +45,28 @@ body {
 .date-btn:hover {
     background:#2563eb;
 }
+
+/* 🔥 LAGT TIL (bare for at baren funker) */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.bottom-bar button {
+    background: #3b82f6;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
 </style>
 </head>
 
@@ -75,11 +97,32 @@ for (let i = 0; i <= 20; i++) {
         localStorage.setItem("dato", pretty);
         localStorage.setItem("datoISO", iso);
 
-
         window.location.href = "tid.html";
     };
 
     container.appendChild(btn);
+}
+</script>
+
+<!-- 🔥 BUNN-BAR (samme design, bare lagt til JS funksjoner senere) -->
+<div class="bottom-bar">
+    <button onclick="goHome()">🏠 Home</button>
+    <button onclick="goBooking()">📅 Booking</button>
+    <button onclick="goProfile()">👤 Profil</button>
+</div>
+
+<!-- 🔥 LAGT TIL JS (må være for at knappene virker) -->
+<script>
+function goHome() {
+    window.location.href = "home.html";
+}
+
+function goBooking() {
+    window.location.href = "booking.html";
+}
+
+function goProfile() {
+    window.location.href = "profile.html";
 }
 </script>
 
