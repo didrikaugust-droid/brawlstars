@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* holder designet ditt enkelt og likt */
 .comment-box {
     margin-top: 20px;
 }
@@ -61,6 +60,9 @@ button:hover {
         <button onclick="sendComment()">Send</button>
 
         <p id="savedComment"></p>
+
+        <!-- HER VISER VI ALLE KOMMENTARER -->
+        <div id="allComments"></div>
     </div>
 </div>
 
@@ -77,13 +79,30 @@ document.getElementById("info").innerHTML = `
     <p><strong>Navn:</strong> ${fornavn} ${etternavn}</p>
 `;
 
-// viser tidligere kommentar hvis den finnes
 if (kommentar) {
     document.getElementById("savedComment").innerHTML =
         "💬 Din kommentar: " + kommentar;
 }
+</script>
 
-function sendComment() {
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHX67rTBwkGH7vDVYL39Jth2wDegWcfRE",
+  authDomain: "brawlstarsbooking-4c1b6.firebaseapp.com",
+  databaseURL: "https://brawlstarsbooking-4c1b6-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "brawlstarsbooking-4c1b6",
+  storageBucket: "brawlstarsbooking-4c1b6.firebasestorage.app",
+  messagingSenderId: "228750608790",
+  appId: "1:228750608790:web:d63e93ec3cc23a2e36f5b7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.sendComment = function () {
     const comment = document.getElementById("comment").value;
 
     if (!comment) {
@@ -93,13 +112,42 @@ function sendComment() {
 
     localStorage.setItem("kommentar", comment);
 
+    push(ref(db, "comments"), {
+        text: comment,
+        navn: (localStorage.getItem("fornavn") || "") + " " +
+              (localStorage.getItem("etternavn") || ""),
+        dato: new Date().toLocaleString("no-NO")
+    });
+
     document.getElementById("savedComment").innerHTML =
         "💬 Din kommentar: " + comment;
 
     document.getElementById("comment").value = "";
 
     alert("✅ Kommentar sendt!");
-}
+};
+
+// VIS ALLE KOMMENTARER
+const box = document.createElement("div");
+document.querySelector(".comment-box").appendChild(box);
+
+onValue(ref(db, "comments"), (snapshot) => {
+    const data = snapshot.val();
+
+    box.innerHTML = "<h3>💬 Alle kommentarer</h3>";
+
+    if (data) {
+        Object.values(data).forEach(c => {
+            box.innerHTML += `
+                <div style="background:#f3f4f6;margin-top:10px;padding:10px;border-radius:10px;">
+                    <b>${c.navn}</b><br>
+                    ${c.text}<br>
+                    <small>${c.dato}</small>
+                </div>
+            `;
+        });
+    }
+});
 </script>
 
 </body>
